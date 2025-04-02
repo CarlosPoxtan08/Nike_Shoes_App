@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nike_app_1/nike_shoes_store_app/main_shake_transition.dart';
 import 'package:nike_app_1/nike_shoes_store_app/nike_shoes.dart';
 
 class NikeShoesDetails extends StatelessWidget {
@@ -27,14 +28,19 @@ class NikeShoesDetails extends StatelessWidget {
             top: 10,
             child: Hero(
               tag: 'number_${shoes.model}',
-              child: Material(
-                color: Colors.transparent,
-                child: FittedBox(
-                  child: Text(
-                    shoes.modelNumber.toString(),
-                    style: TextStyle(
-                      color: Colors.black12,
-                      fontWeight: FontWeight.bold,
+              child: ShakeTransition(
+                axis: Axis.vertical,
+                duration: const Duration(milliseconds: 1400),
+                offset: 15,
+                child: Material(
+                  color: Colors.transparent,
+                  child: FittedBox(
+                    child: Text(
+                      shoes.modelNumber.toString(),
+                      style: TextStyle(
+                        color: Colors.black12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -49,12 +55,19 @@ class NikeShoesDetails extends StatelessWidget {
                     : 'image_${shoes.model}';
                 return Container(
                   alignment: Alignment.center,
-                  child: Hero(
-                    tag: tag,
-                    child: Image.asset(
-                      shoes.images[index],
-                      height: 200,
-                      width: 200,
+                  child: ShakeTransition(
+                    duration: index == 0
+                        ? const Duration(milliseconds: 900)
+                        : Duration.zero,
+                    axis: Axis.vertical,
+                    offset: 10,
+                    child: Hero(
+                      tag: tag,
+                      child: Image.asset(
+                        shoes.images[index],
+                        height: 200,
+                        width: 200,
+                      ),
                     ),
                   ),
                 );
@@ -95,68 +108,77 @@ class NikeShoesDetails extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                shoes.model,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
+                          ShakeTransition(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  shoes.model,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                  ),
                                 ),
-                              ),
-                              const Spacer(),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: <Widget>[
-                                    Text(
-                                      '\$${shoes.oldPrice.toInt().toString()}',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        decoration: TextDecoration.lineThrough,
-                                        fontSize: 12,
+                                const Spacer(),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: <Widget>[
+                                      Text(
+                                        '\$${shoes.oldPrice.toInt().toString()}',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      '\$${shoes.currentPrice.toInt().toString()}',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
+                                      Text(
+                                        '\$${shoes.currentPrice.toInt().toString()}',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                           const SizedBox(height: 20),
-                          Text(
-                            'AVAILABLE SIZES',
-                            style: TextStyle(fontSize: 11),
+                          ShakeTransition(
+                            duration: const Duration(milliseconds: 1100),
+                            child: Text(
+                              'AVAILABLE SIZES',
+                              style: TextStyle(fontSize: 11),
+                            ),
                           ),
                           const SizedBox(height: 20),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              _ShoesSizeItem(
-                                text: '6',
-                              ),
-                              _ShoesSizeItem(
-                                text: '7',
-                              ),
-                              _ShoesSizeItem(
-                                text: '9',
-                              ),
-                              _ShoesSizeItem(
-                                text: '10',
-                              ),
-                              _ShoesSizeItem(
-                                text: '11',
-                              ),
-                            ],
+                          ShakeTransition(
+                            duration: const Duration(milliseconds: 1100),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                _ShoesSizeItem(
+                                  text: '6',
+                                ),
+                                _ShoesSizeItem(
+                                  text: '7',
+                                ),
+                                _ShoesSizeItem(
+                                  text: '9',
+                                ),
+                                _ShoesSizeItem(
+                                  text: '10',
+                                ),
+                                _ShoesSizeItem(
+                                  text: '11',
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(height: 20),
                           Text(
@@ -197,7 +219,7 @@ class NikeShoesDetails extends StatelessWidget {
                       left: 0,
                       right: 0,
                       bottom: value ? 0.0 : -kToolbarHeight,
-                      duration: const Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 250),
                       child: child!);
                 })
           ],
