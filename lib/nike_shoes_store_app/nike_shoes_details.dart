@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:nike_app_1/nike_shoes_store_app/main_shake_transition.dart';
 import 'package:nike_app_1/nike_shoes_store_app/nike_shoes.dart';
+import 'package:nike_app_1/nike_shoes_store_app/nike_shopping_cart.dart';
 
 class NikeShoesDetails extends StatelessWidget {
   final NikeShoes shoes;
   final ValueNotifier<bool> notifierButtonsVisible = ValueNotifier(false);
 
   NikeShoesDetails({super.key, required this.shoes});
+
+  Future<void> _openShoppingCart(BuildContext context) async {
+    notifierButtonsVisible.value = false;
+    await Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (_, animation1, __) {
+          return FadeTransition(
+            opacity: animation1,
+            child: NikeShoppingCart(
+              shoes: shoes,
+            ),
+          );
+        },
+      ),
+    );
+    notifierButtonsVisible.value = true;
+  }
 
   Widget _buildCarousel(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -210,7 +229,9 @@ class NikeShoesDetails extends StatelessWidget {
                           heroTag: 'fav_2',
                           backgroundColor: Colors.black,
                           child: Icon(Icons.shopping_cart),
-                          onPressed: () {}),
+                          onPressed: () {
+                            _openShoppingCart(context);
+                          }),
                     ],
                   ),
                 ),
@@ -218,7 +239,7 @@ class NikeShoesDetails extends StatelessWidget {
                   return AnimatedPositioned(
                       left: 0,
                       right: 0,
-                      bottom: value ? 0.0 : -kToolbarHeight,
+                      bottom: value ? 0.0 : -kToolbarHeight * 1.5,
                       duration: const Duration(milliseconds: 250),
                       child: child!);
                 })
